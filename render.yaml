@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: my-php-api
+    env: docker
+    plan: free
+    repo: https://github.com/gambell/my-php-backend
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: ""
