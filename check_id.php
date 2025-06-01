@@ -1,13 +1,13 @@
 <?php
 header('Content-Type: application/json');
 
-$servername = "localhost";
-$username = "root";      // 기본 XAMPP root 계정
-$password = "";          // 기본 XAMPP root 비밀번호 없음
-$dbname = "user_db";  // 본인 DB 이름으로 변경
+$host = "sql311.infinityfree.com";
+$user = "if0_39128377";
+$password = "Rpaqpf1225";
+$dbname = "if0_39128377_user_db";
 
-// MySQL 연결
-$conn = new mysqli($servername, $username, $password, $dbname);
+// 변수명 오류 수정 ($servername, $username → $host, $user)
+$conn = new mysqli($host, $user, $password, $dbname);
 if ($conn->connect_error) {
     echo json_encode(['error' => 'DB 연결 실패']);
     exit;
@@ -19,7 +19,7 @@ if (!isset($_GET['userid'])) {
 }
 
 $userid = $conn->real_escape_string($_GET['userid']);
-$sql = "SELECT COUNT(*) AS cnt FROM user WHERE userid = '$userid'"; // users 테이블과 userid 컬럼명 확인
+$sql = "SELECT COUNT(*) AS cnt FROM user WHERE userid = '$userid'";
 $result = $conn->query($sql);
 
 if (!$result) {
