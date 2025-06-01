@@ -5,21 +5,21 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$dbname = 'user_db';
+$host = "sql311.infinityfree.com";
+$user = "if0_39128377";
+$password = "Rpaqpf1225"; // 변수명이 $pass → $password 로 수정
+$dbname = "if0_39128377_user_db";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
+$conn = new mysqli($host, $user, $password, $dbname);
 if ($conn->connect_error) {
     echo json_encode(['status' => 'error', 'message' => 'DB 연결 실패: ' . $conn->connect_error]);
     exit;
 }
 
 $userid = $_POST['userid'] ?? '';
-$password = $_POST['password'] ?? '';
+$password_input = $_POST['password'] ?? '';
 
-if (!$userid || !$password) {
+if (!$userid || !$password_input) {
     echo json_encode(['status' => 'error', 'message' => '아이디와 비밀번호를 입력하세요']);
     exit;
 }
@@ -35,8 +35,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
-    // 해시 비밀번호 검증
-    if (password_verify($password, $row['password'])) {
+    if (password_verify($password_input, $row['password'])) {
         $_SESSION['userid'] = $row['userid'];
         echo json_encode(['status' => 'success', 'message' => '로그인 성공']);
     } else {
@@ -48,3 +47,4 @@ if ($row = $result->fetch_assoc()) {
 
 $stmt->close();
 $conn->close();
+?>
